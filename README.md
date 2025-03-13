@@ -61,6 +61,20 @@ A primeira etapa do projeto consiste em realizar uma migração **"Lift-and-Shif
 
 ---
 
+# Migração de E-commerce para AWS - Etapa 1: Migração "Lift-and-Shift" (As-Is)
+
+## Escopo Detalhado
+
+A primeira etapa do projeto consiste em realizar uma migração **"Lift-and-Shift"** (também conhecida como migração **"As-Is"**), onde a infraestrutura atual do e-commerce será replicada na AWS sem alterações significativas na arquitetura. O objetivo é garantir uma migração rápida e segura, minimizando o tempo de inatividade (downtime) e preparando o ambiente para a segunda etapa de modernização.
+
+### Objetivos da Etapa 1
+
+1. Replicar a infraestrutura atual na AWS.
+2. Garantir a continuidade das operações do e-commerce durante a migração.
+3. Preparar o ambiente para a modernização na Etapa 2 (Kubernetes).
+
+---
+
 ## Atividades Necessárias para a Migração
 
 ### 1. Análise e Planejamento
@@ -72,7 +86,7 @@ A primeira etapa do projeto consiste em realizar uma migração **"Lift-and-Shif
      - Análise das dependências entre os componentes.
    - **Definição de Requisitos**:
      - Requisitos de desempenho (latência, throughput, etc.).
-     - Requisitos de segurança (criptografia, controle de acesso, etc.).
+     - Requisitos de segurança (controle de acesso, proteção contra ataques, etc.).
 
 ### 2. Configuração do Ambiente AWS
    - **Criação do VPC (Virtual Private Cloud)**:
@@ -84,10 +98,10 @@ A primeira etapa do projeto consiste em realizar uma migração **"Lift-and-Shif
 
 ### 3. Migração dos Servidores
    - **Migração do Frontend (React)**:
-     - Criação de uma instância EC2 para hospedar o frontend.
+     - Utilização do **AWS Server Migration Service (SMS)** para migrar o servidor frontend para uma instância EC2.
      - Configuração do ambiente de execução (Node.js, Nginx, etc.).
    - **Migração do Backend (APIs)**:
-     - Criação de instâncias EC2 para hospedar as APIs.
+     - Utilização do **AWS Server Migration Service (SMS)** para migrar o servidor backend para instâncias EC2.
      - Configuração do Nginx como balanceador de carga.
    - **Configuração do Elastic Load Balancer (ELB)**:
      - Distribuição do tráfego entre as instâncias do backend.
@@ -99,18 +113,17 @@ A primeira etapa do projeto consiste em realizar uma migração **"Lift-and-Shif
      - Configuração de backups automáticos no RDS.
 
 ### 5. Configuração de Segurança
-   - **Implementação do AWS WAF (Web Application Firewall)**:
-     - Proteção contra ataques comuns, como SQL Injection e XSS.
-   - **Configuração do AWS Shield**:
+   - **AWS WAF (Web Application Firewall)**:
+     - Integrado ao Elastic Load Balancer (ELB) para proteção contra ataques web.
+     - Configuração de regras personalizadas para bloquear tráfego malicioso.
+   - **AWS Shield**:
      - Proteção contra ataques DDoS.
-   - **Criptografia**:
-     - Criptografia em repouso para o RDS e S3.
-     - Criptografia em trânsito usando HTTPS.
+     - Implementado em segundo plano para proteger o ELB e outros recursos públicos.
 
 ### 6. Configuração de Backup
-   - **Configuração do AWS Backup**:
+   - **AWS Backup**:
      - Backup automatizado das instâncias EC2 e do RDS.
-     - Definição de políticas de retenção (7 dias para backups diários).
+     - Configuração de políticas de retenção (7 dias para backups diários).
    - **Versionamento no S3**:
      - Habilitado para manter histórico de alterações nos arquivos estáticos.
 
@@ -119,14 +132,121 @@ A primeira etapa do projeto consiste em realizar uma migração **"Lift-and-Shif
      - Uso do Apache JMeter para simular tráfego intenso e validar a escalabilidade.
    - **Testes Funcionais**:
      - Verificação do funcionamento do frontend, backend e banco de dados.
-   - **Testes de Segurança**:
-     - Validação das configurações de segurança (WAF, Shield, IAM).
+   - **Monitoramento com Amazon CloudWatch**:
+     - Configuração de dashboards para monitorar métricas de desempenho (CPU, memória, tráfego, etc.).
+     - Configuração de alertas para identificar problemas rapidamente.
 
 ### 8. Corte (Cutover)
    - **Atualização dos Registros DNS**:
-     - Redirecionamento do tráfego para o novo ambiente na AWS.
+     - Utilização do **Amazon Route 53** para redirecionar o tráfego para o novo ambiente na AWS.
+     - Configuração de registros DNS para apontar para o Elastic Load Balancer (ELB).
    - **Monitoramento Pós-Migração**:
      - Uso do AWS CloudWatch para monitorar métricas e logs.
      - Configuração de alertas para identificar problemas rapidamente.
 
 ---
+
+## Ferramentas Utilizadas
+
+As seguintes ferramentas e serviços da AWS foram utilizados durante a migração:
+
+1. **AWS Server Migration Service (SMS)**:
+   - Utilizado para migração dos servidores (frontend e backend) para instâncias EC2.
+
+2. **Amazon RDS**:
+   - Utilizado para migração do banco de dados MySQL.
+   - Configuração de uma instância RDS Multi-AZ para alta disponibilidade.
+
+3. **Amazon S3**:
+   - Utilizado para armazenamento de objetos estáticos (fotos, vídeos, links).
+
+4. **AWS WAF (Web Application Firewall)**:
+   - Proteção contra ataques web, como SQL Injection e XSS.
+
+5. **AWS Shield**:
+   - Proteção contra ataques DDoS.
+
+6. **AWS Backup**:
+   - Utilizado para backups automatizados das instâncias EC2 e do RDS.
+
+7. **Amazon CloudWatch**:
+   - Utilizado para monitoramento de desempenho e logs.
+
+8. **AWS CLI (Command Line Interface)**:
+   - Utilizado para automação de tarefas, como criação de instâncias EC2 e gerenciamento de backups.
+
+9. **Amazon Route 53**:
+   - Utilizado para gerenciamento de DNS e redirecionamento do tráfego para o novo ambiente na AWS.
+
+---
+
+## Diagrama da Infraestrutura na AWS
+
+Abaixo está o diagrama da infraestrutura na AWS após a migração "Lift-and-Shift":
+
+![Migração Lift-and-Shift drawio](https://github.com/user-attachments/assets/e2c832e9-562f-4f2d-8b2f-66f0157c9a25)
+
+### Descrição do Diagrama:
+1. **Amazon Route 53**:
+   - Serviço de DNS utilizado para redirecionar o tráfego externo para o Elastic Load Balancer (ELB).
+
+2. **Frontend (React)**:
+   - Hospedado em uma instância EC2.
+   - Acesso público via Elastic Load Balancer (ELB).
+
+3. **Backend (APIs + Nginx)**:
+   - Hospedado em instâncias EC2.
+   - Balanceamento de carga via ELB.
+   - Arquivos estáticos armazenados no Amazon S3.
+
+4. **Banco de Dados (MySQL)**:
+   - Hospedado no Amazon RDS (Multi-AZ para alta disponibilidade).
+
+5. **Armazenamento de Arquivos Estáticos**:
+   - Bucket Amazon S3 para fotos, vídeos e links.
+
+6. **Segurança**:
+   - **AWS WAF**: Integrado ao ELB para proteção contra ataques web.
+   - **AWS Shield**: Proteção contra DDoS (representado como uma camada de proteção ao redor do ELB).
+   - Grupos de segurança (Security Groups) para controlar o tráfego.
+   - IAM para gerenciamento de permissões.
+
+---
+
+## Requisitos de Segurança
+
+Para garantir a segurança do ambiente na AWS, foram implementadas as seguintes práticas:
+
+1. **IAM (Identity and Access Management)**:
+   - Criação de usuários e roles com permissões mínimas necessárias.
+   - Uso de políticas de segurança restritivas.
+
+2. **Grupos de Segurança (Security Groups)**:
+   - Configuração de regras de firewall para permitir apenas tráfego necessário.
+   - Bloqueio de portas não utilizadas.
+
+3. **Proteção Contra Ataques**:
+   - **AWS WAF**: Para proteção contra vulnerabilidades web.
+   - **AWS Shield**: Para proteção contra DDoS.
+
+---
+
+## Processo de Backup
+
+O processo de backup foi configurado da seguinte forma:
+
+1. **Banco de Dados (RDS)**:
+   - Backups automáticos diários com retenção de 7 dias.
+   - Snapshots manuais antes de grandes atualizações.
+
+2. **Arquivos Estáticos (S3)**:
+   - Versionamento habilitado no bucket S3 para manter histórico de alterações.
+   - Configuração de Lifecycle Policies para armazenamento de backups em S3 Glacier.
+
+3. **Instâncias EC2**:
+   - Backup automatizado usando o AWS Backup.
+
+---
+
+## Custo da Infraestrutura na AWS
+
