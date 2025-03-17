@@ -47,6 +47,7 @@ A migração será realizada em duas etapas:
 2. **Modernização para Kubernetes**:
    - Após a migração inicial, a infraestrutura será reestruturada para utilizar Kubernetes e outros serviços gerenciados da AWS.
 
+## Migração "Lift-and-Shift" (As-Is)
 
 ### Objetivos da Etapa 1
 
@@ -97,7 +98,7 @@ A migração será realizada em duas etapas:
    - **AWS WAF (Web Application Firewall)**:
      - Integrado ao Elastic Load Balancer (ELB) para proteção contra ataques web.
      - Configuração de regras personalizadas para bloquear tráfego malicioso.
-   - **AWS Shield**:
+   - **AWS Shield Standard**:
      - Proteção contra ataques DDoS.
      - Implementado em segundo plano para proteger o ELB e outros recursos públicos.
 
@@ -144,7 +145,7 @@ As seguintes ferramentas e serviços da AWS foram utilizados durante a migraçã
 4. **AWS WAF (Web Application Firewall)**:
    - Proteção contra ataques web, como SQL Injection e XSS.
 
-5. **AWS Shield**:
+5. **AWS Shield Standard**:
    - Proteção contra ataques DDoS.
 
 6. **AWS Backup**:
@@ -188,7 +189,7 @@ Abaixo está o diagrama da infraestrutura na AWS após a migração "Lift-and-Sh
 
 6. **Segurança**:
    - **AWS WAF**: Integrado ao ELB para proteção contra ataques web.
-   - **AWS Shield**: Proteção contra DDoS (representado como uma camada de proteção ao redor do ELB).
+   - **AWS Shield Standard**: Proteção contra DDoS (representado como uma camada de proteção ao redor do ELB).
    - Grupos de segurança (Security Groups) para controlar o tráfego.
    - IAM para gerenciamento de permissões.
 
@@ -208,7 +209,7 @@ Para garantir a segurança do ambiente na AWS, foram implementadas as seguintes 
 
 3. **Proteção Contra Ataques**:
    - **AWS WAF**: Para proteção contra vulnerabilidades web.
-   - **AWS Shield**: Para proteção contra DDoS.
+   - **AWS Shield Standard**: Para proteção contra DDoS.
 
 ---
 
