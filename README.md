@@ -47,25 +47,6 @@ A migração será realizada em duas etapas:
 2. **Modernização para Kubernetes**:
    - Após a migração inicial, a infraestrutura será reestruturada para utilizar Kubernetes e outros serviços gerenciados da AWS.
 
-# Migração de E-commerce para AWS - Etapa 1: Migração "Lift-and-Shift" (As-Is)
-
-## Escopo Detalhado
-
-A primeira etapa do projeto consiste em realizar uma migração **"Lift-and-Shift"** (também conhecida como migração **"As-Is"**), onde a infraestrutura atual do e-commerce será replicada na AWS sem alterações significativas na arquitetura. O objetivo é garantir uma migração rápida e segura, minimizando o tempo de inatividade (downtime) e preparando o ambiente para a segunda etapa de modernização.
-
-### Objetivos da Etapa 1
-
-1. Replicar a infraestrutura atual na AWS.
-2. Garantir a continuidade das operações do e-commerce durante a migração.
-3. Preparar o ambiente para a modernização na Etapa 2 (Kubernetes).
-
----
-
-# Migração de E-commerce para AWS - Etapa 1: Migração "Lift-and-Shift" (As-Is)
-
-## Escopo Detalhado
-
-A primeira etapa do projeto consiste em realizar uma migração **"Lift-and-Shift"** (também conhecida como migração **"As-Is"**), onde a infraestrutura atual do e-commerce será replicada na AWS sem alterações significativas na arquitetura. O objetivo é garantir uma migração rápida e segura, minimizando o tempo de inatividade (downtime) e preparando o ambiente para a segunda etapa de modernização.
 
 ### Objetivos da Etapa 1
 
