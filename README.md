@@ -335,6 +335,7 @@ A modernização envolve *migrar* a aplicação existente para *Kubernetes* no *
 
 ## Custo da Infraestrutura na AWS
 
+![file_2025-03-17_21 45 32](https://github.com/user-attachments/assets/be1ddaec-8668-4515-9516-9c7576cad4eb)
 
 
 ## Conclusão
