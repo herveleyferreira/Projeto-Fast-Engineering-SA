@@ -234,4 +234,125 @@ O processo de backup foi configurado da seguinte forma:
 
 ![file_2025-03-17_19 14 25](https://github.com/user-attachments/assets/8a0fde4d-3bc8-4775-9e98-ee11a52368b0)
 
+## Modernização com Kubernetes
+
+### Objetivo da Etapa 2
+
+A modernização envolve *migrar* a aplicação existente para *Kubernetes* no **Amazon EKS** e configurar os serviços auxiliares.
+
+---
+
+## Atividades Necessárias para a Migração
+
+- **Análise e Planejamento**: Levantar requisitos de infraestrutura, segurança e escalabilidade.  
+- **Criação do Cluster EKS**: Provisionar e configurar o **Amazon EKS** para ambiente de produção e desenvolvimento.  
+- **Containerização das Aplicações**: Criar **Dockerfiles**, ajustar aplicações para rodar em contêineres e armazená-los no **Amazon ECR**.  
+- **Configuração de Rede**: Definir **subnets**, **NAT Gateway**, **Internet Gateway** e **Security Groups**.  
+- **Deploy de Serviços**: Criar manifests Kubernetes (**Deployment**, **Service**, **Ingress**) para frontend, backend e APIs.  
+- **Banco de Dados**: Configurar **RDS Multi-AZ** para garantir alta disponibilidade.  
+- **Balanceamento de Carga**: Utilizar **ALB (Application Load Balancer)** para distribuir o tráfego.  
+- **Segurança**: Configurar **IAM**, **AWS WAF**, **AWS Shield**, **Secrets Manager** e monitoramento com **CloudWatch**.  
+- **Backup e Disaster Recovery**: Definir estratégias de backup no **AWS Backup** e snapshots no RDS.  
+- **Testes e Validação**: Testar desempenho, segurança e falhas antes de migrar o tráfego definitivamente.  
+
+---
+
+## Ferramentas que Serão Utilizadas
+
+- **Orquestração de Contêineres**: Amazon EKS.  
+- **Gerenciamento de Contêineres**: Docker e Amazon ECR.  
+- **Rede e Segurança**: VPC, Security Groups, IAM, AWS WAF, AWS Shield, AWS Secrets Manager.  
+- **Banco de Dados**: Amazon RDS Multi-AZ.  
+- **Balanceamento de Carga**: ALB (Application Load Balancer).  
+- **DNS e CDN**: Route 53 e AWS CloudFront.  
+- **Monitoramento e Logging**: Amazon CloudWatch, AWS Backup.  
+- **Armazenamento**: Amazon S3.  
+- **Ferramentas Auxiliares**: AWS Organizations, AWS IAM.  
+
+---
+
+## Diagrama da Infraestrutura na AWS
+
+![diagrama_kubernetes](https://github.com/user-attachments/assets/9a1eeeef-8179-4a11-bff7-9c9d487d4ee7)
+
+## Descrição do Diagrama
+
+### Ambientes
+- Dois ambientes isolados (**DEV** e **PROD**) em **VPCs separadas**.
+
+### Orquestração de Contêineres
+- **Amazon EKS** para gerenciar workloads em Kubernetes.
+
+### Computação
+- Três nós **EC2** para o cluster Kubernetes, cada um com **4 vCPUs** e **10GB de RAM**.
+
+### Banco de Dados
+- **Amazon RDS Multi-AZ** com três nós (1 primário + 2 réplicas) para alta disponibilidade.
+
+### Armazenamento
+- **Amazon S3** para persistência de objetos (imagens, logs etc.).
+- **Amazon EBS** para volumes persistentes dos contêineres.
+
+### Rede e Segurança
+- **Subnets privadas** para banco de dados e backend, **públicas** para frontend e balanceadores.
+- **NAT Gateway** para comunicação de instâncias privadas com a internet.
+- **AWS WAF** e **AWS Shield** para proteção contra ataques.
+- **VPN** para acesso seguro dos desenvolvedores.
+
+### Balanceamento de Carga
+- **Application Load Balancer (ALB)** distribuindo tráfego para o EKS.
+
+### DNS e CDN
+- **Route 53** para gerenciamento de domínios.
+- **CloudFront** para distribuição de conteúdo.
+
+### Monitoramento e Gestão
+- **CloudWatch** para logs e métricas.
+- **AWS Backup** para snapshots automáticos.
+
+---
+
+## Requisitos de Segurança
+
+- **Controle de Acesso**: IAM com permissões mínimas necessárias para cada serviço.  
+- **Proteção contra Ataques**: AWS WAF para filtragem de tráfego malicioso, AWS Shield contra DDoS.  
+- **Gerenciamento de Segredos**: AWS Secrets Manager para credenciais e chaves sensíveis.  
+- **Redes Seguras**: Uso de subnets privadas para banco de dados e backend, acesso a partir de VPNs.  
+- **Monitoramento e Logging**: CloudWatch para logs e métricas, CloudTrail para auditoria.  
+- **Criptografia**: Dados criptografados em trânsito (TLS) e em repouso (KMS no RDS e S3).  
+- **Backup e Disaster Recovery**: AWS Backup e snapshots automáticos no RDS.  
+
+---
+
+## Processo de Backup
+
+- **Banco de Dados**: Snapshots automáticos no Amazon RDS com retenção configurável.  
+- **Armazenamento de Objetos**: Amazon S3 versionado e com políticas de ciclo de vida.  
+- **Volumes de Armazenamento**: Backup via AWS Backup para snapshots de EBS.  
+- **Configuração e Logs**: Logs armazenados no CloudWatch e replicação para S3.  
+
+---
+
+## Custo da Infraestrutura na AWS
+
+
+
+## Conclusão
+
+A migração e modernização da infraestrutura do nosso e-commerce para a AWS representam um **marco estratégico** para garantir escalabilidade, segurança e alta disponibilidade. Com a primeira etapa (**"Lift-and-Shift"**), replicamos a infraestrutura atual na AWS de forma rápida e segura, utilizando serviços como **EC2**, **RDS Multi-AZ**, **S3**, **ELB**, **WAF**, **Shield** e **Route 53**. Isso nos permitiu reduzir o risco de downtime, melhorar o desempenho e preparar o ambiente para a próxima fase.
+
+Na segunda etapa, com a **modernização para Kubernetes no Amazon EKS**, avançaremos ainda mais, garantindo:
+- **Escalabilidade automática**: Para lidar com picos de tráfego sem intervenção manual.
+- **Resiliência**: Com a orquestração de contêineres, garantimos que a aplicação se recupere rapidamente de falhas.
+- **Segurança reforçada**: Utilizando **IAM**, **AWS WAF**, **Shield** e **Secrets Manager**, protegemos dados sensíveis e aplicações contra ameaças.
+- **Eficiência operacional**: Com a automação de deploys, monitoramento e backups, reduzimos a complexidade e os custos operacionais.
+
+### Benefícios Esperados
+- **Alta disponibilidade**: Com o RDS Multi-AZ e o ELB, garantimos que o site esteja sempre no ar, mesmo durante falhas ou ataques.
+- **Segurança robusta**: Proteção contra DDoS, injeções de SQL, XSS e outras ameaças comuns.
+- **Custo otimizado**: Utilizamos instâncias adequadas e estratégias de backup para evitar gastos desnecessários.
+- **Preparação para o futuro**: A arquitetura na AWS e o uso de Kubernetes nos permitem escalar rapidamente e adotar novas tecnologias.
+
+Com essa migração, estamos construindo uma base sólida para o crescimento contínuo do e-commerce, garantindo uma **experiência superior para os clientes** e uma **operação mais eficiente** para a equipe. O futuro é escalável, seguro e inovador! 🚀
+
 
