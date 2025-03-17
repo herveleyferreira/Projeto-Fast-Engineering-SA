@@ -250,3 +250,6 @@ O processo de backup foi configurado da seguinte forma:
 
 ## Custo da Infraestrutura na AWS
 
+![file_2025-03-17_19 14 25](https://github.com/user-attachments/assets/8a0fde4d-3bc8-4775-9e98-ee11a52368b0)
+
+
